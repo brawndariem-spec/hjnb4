@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速加入roblox挂群</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            background-image: 
+                linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+                linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+                linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #000000, #333333);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* 眼睛图标样式 */
+        .eye-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            height: 80px;
+            position: relative;
+        }
+        
+        .eye-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .eye {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .eye::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #222;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 上眼皮 */
+        .eyelid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            border-radius: 50%;
+            z-index: 3;
+            transform-origin: top;
+            transform: scaleY(0);
+            animation: blink 4s ease-in-out infinite;
+        }
+        
+        /* 睫毛装饰 */
+        .eye-lashes {
+            position: absolute;
+            top: -15px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 4;
+        }
+        
+        .lash {
+            width: 4px;
+            height: 15px;
+            background-color: white;
+            border-radius: 2px;
+        }
+        
+        /* 眼睛动画 */
+        @keyframes eyeMovement {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(10px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(-8px) translateY(8px);
+            }
+            75% {
+                transform: translateX(-5px) translateY(-8px);
+            }
+        }
+        
+        /* 修复眨眼动画 - 正确从上往下眨眼 */
+        @keyframes blink {
+            0%, 90%, 100% {
+                transform: scaleY(0);
+            }
+            95% {
+                transform: scaleY(1);
+            }
+        }
+        
+        @keyframes pupilMove {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        
+        .eye::before {
+            animation: pupilMove 3s ease-in-out infinite;
+        }
+        
+        .eye {
+            animation: eyeMovement 5s ease-in-out infinite;
+        }
+        
+        .eye:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .eye:nth-child(2) .eyelid {
+            animation-delay: 0.2s;
+        }
+        
+        .groups-container {
+            padding: 40px 30px;
+        }
+        
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .group-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .group-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #ddd;
+        }
+        
+        .group-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .group-name i {
+            margin-right: 10px;
+            color: #333;
+            font-size: 1.3rem;
+        }
+        
+        .join-btn {
+            display: block;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-top: auto;
+            border: 1px solid #222;
+        }
+        
+        .join-btn:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .join-btn i {
+            margin-right: 8px;
+        }
+        
+        .footer {
+            background-color: #f9f9f9;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .footer p {
+            margin-bottom: 8px;
+        }
+        
+        .instruction {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-left: 4px solid #333;
+        }
+        
+        .instruction h3 {
+            color: #222;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .instruction p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            .group-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .groups-container {
+                padding: 30px 20px;
+            }
+            
+            .eye-container {
+                gap: 20px;
+            }
+            
+            .eye {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .eye::before {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .eye::after {
+                width: 15px;
+                height: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+                background-size: 30px 30px;
+            }
+            
+            .container {
+                border-radius: 8px;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .eye-container {
+                gap: 15px;
+            }
+            
+            .eye {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .eye::before {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .eye::after {
+                width: 12px;
+                height: 12px;
+            }
+            
+            .group-item {
+                padding: 20px;
+            }
+        }
+        
+        /* 添加简约动画 */
+        .group-item {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .group-item:nth-child(1) { animation-delay: 0.1s; }
+        .group-item:nth-child(2) { animation-delay: 0.2s; }
+        .group-item:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="eye-icon">
+                <div class="eye-container">
+                    <div class="eye">
+                        <div class="eyelid"></div>
+                        <div class="eye-lashes">
+                            <div class="lash"></div>
+                            <div class="lash"></div>
+                            <div class="lash"></div>
+                        </div>
+                    </div>
+                    <div class="eye">
+                        <div class="eyelid"></div>
+                        <div class="eye-lashes">
+                            <div class="lash"></div>
+                            <div class="lash"></div>
+                            <div class="lash"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1>快速加入热门服务器</h1>
+            <p>❄️点击下方按钮即可快速加入roblox的服务器,制作者红姜一定要尝,不忘初心，坚守本心❄️</p>
+        </div>
+        
+        <div class="groups-container">
+            <div class="instruction">
+                <h3>本界面说明</h3>
+                <p>以下是服务器推荐，大部分都是高分服务器。</p>
+            </div>
+            
+            <div class="group-list">
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>被遗弃</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=98062e00d024194a9b67aa7a8a2a581b&type=ExperienceDetails&stamp=1766911124227" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>墨水游戏</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=495d5c38109fd642bcf06bd56a60d9c5&type=ExperienceDetails&stamp=1766912776531" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>战争大亨</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=b605a896f3d8734c8a6f7c2b9273e2a3&type=ExperienceDetails&stamp=1766912886158" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>slap battles</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=30d3148692754e41adce7b900e090042&type=ExperienceDetails&stamp=1766912955437" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>死亡之死</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=1839de989b83334687c1344db0c3734a&type=ExperienceDetails&stamp=1766913016952" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>DOOR</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=9330bfd9453a2d4a9dbc4e6c263447c5&type=ExperienceDetails&stamp=1766913057840" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>通用时间</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=df3c3da47342fb48b0824e105ee10b72&type=ExperienceDetails&stamp=1766913211655" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>最坚强的战场</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=85eb12f031a5504a87c3ca292e7f8d0b&type=ExperienceDetails&stamp=1766913184589" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>森林中的99夜</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=fe0bf33bef03db46994526c61f2dab19&type=ExperienceDetails&stamp=1766913284734" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>种植花园</span>
+                    </div>
+                    <p>不要忘记了农场主的人机事件。</p>
+                    <a href="https://www.roblox.com/share?code=72f73410dc62394aa74ec6b001f19c32&type=ExperienceDetails&stamp=1766913363134" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>BF</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=6cd9753b760ce04e8ef4b8b29e1ff53f&type=ExperienceDetails&stamp=1766913401263" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>偷走脑红</span>
+                    </div>
+                    <p>与农场主大战🤔🤔🤔。</p>
+                    <a href="https://www.roblox.com/share?code=b26eecfee4fa7f479afe1bb73d3ffc91&type=ExperienceDetails&stamp=1766913444617" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>锻造</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=6f8e210925bafd4a9a4fc848873e7923&type=ExperienceDetails&stamp=1766913527134" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>竞争对手</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=9899fb7f52e79048b4bea71993352002&type=ExperienceDetails&stamp=1766913568946" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>蜂群模拟器</span>
+                    </div>
+                    <p>折磨肝的模拟器。</p>
+                    <a href="" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>鱼</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=64374e091a691e4394f995f9be079c05&type=ExperienceDetails&stamp=1766913711388" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>破坏者谜团二</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=e9f4d4bf673dbc4caee0913196cecda0&type=ExperienceDetails&stamp=1766913771256" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>死铁轨</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=c77b7aa612e2db4d91403ec427ac2fe5&type=ExperienceDetails&stamp=1766913804179" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>内脏与黑火药</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=e0a1e47768a9484088d45bb33115b4fc&type=ExperienceDetails&stamp=1766913848525" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>死亡球</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=d90b85bbf4a6f1439447106fb9b5ed90&type=ExperienceDetails&stamp=1766913927111" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>造船寻宝</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=7a64aff138cb10439974e617e5e9dec5&type=ExperienceDetails&stamp=1766913958605" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-users"></i>
+                        <span>自然灾害</span>
+                    </div>
+                    <p>热门服务器之一。</p>
+                    <a href="https://www.roblox.com/share?code=2278cdfaba85cf4bab96e1f9cb136e94&type=ExperienceDetails&stamp=1766914002788" class="join-btn" target="_blank">
+                        <i class="fas fa-sign-in-alt"></i> 立即加入
+                    </a>
+                </div>
